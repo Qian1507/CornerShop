@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Authentication;
-using System.Text;
-using System.Threading.Tasks;
-using CornerShop.Core.Models;
+﻿using CornerShop.Core.Models;
 using MongoDB.Driver;
+using System.Security.Authentication;
 
 
 namespace CornerShop.Core.Data
@@ -156,6 +151,17 @@ namespace CornerShop.Core.Data
             decimal discount = total * GetDiscountRate(user.Level);
             decimal finalTotal = total - discount;
 
+            foreach(var item in user.Cart)
+            {
+                var product= await _products.Find(p=>p.Id==item.ProductId).FirstOrDefaultAsync();
+                if (product!=null)
+                {
+                    product.Stock -= item.Quantity;
+
+                    await _products.ReplaceOneAsync(p=>p.Id==product.Id, product);
+                }
+            }
+
             // Update user level based on final total
             if (finalTotal >= 2000) user.Level = UserLevel.Gold;
             else if (finalTotal >= 1400) user.Level = UserLevel.Silver;
@@ -187,7 +193,12 @@ namespace CornerShop.Core.Data
         //API CRUD
         public async Task AddProductAsync(Product product)
         {
-            await _products.InsertOneAsync(product);
+            var exists = await _products.Find(p => p.Name == product.Name).AnyAsync();
+            if (!exists)
+            {
+                await _products.InsertOneAsync(product);
+            }
+            
         }
         // Get all products
         public async Task<List<Product>> GetAllProductsAsync()
@@ -205,9 +216,9 @@ namespace CornerShop.Core.Data
             return await _products.Find(p => p.Category == category).ToListAsync();
         }
         //Update product
-        public async Task UpdateProductAsync(Product product)
+        public async Task  UpdateProductAsync(Product product)
         {
-            await _products.ReplaceOneAsync(p => p.Id == product.Id, product);
+             await _products.ReplaceOneAsync(p => p.Id == product.Id, product);
         }
         //Delete product
         public async Task DeleteProductAsync(string productId)

@@ -11,6 +11,7 @@ namespace CornerShop.AdminAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
             ShopRepository repo=new ShopRepository(DBConfig.ConnectionString);
 
             // Add services to the container.
@@ -71,7 +72,20 @@ namespace CornerShop.AdminAPI
                 return Results.Ok($"Request to delete ID {id} sent.");
             });
             //UPDATE
-
+            app.MapPut("/products/", async (string id, Product product) =>
+            {
+                if (id != product.Id)
+                {
+                    return Results.BadRequest("ID mismatch: URL ID does not match Body ID.");
+                }
+                var existing = await repo.GetProductByIdAsync(id);
+                if (existing == null)
+                {
+                    return Results.NotFound("Product not found");
+                }
+                await repo.UpdateProductAsync(product);
+                return Results.Ok(product);
+            });
 
             app.Run();
         }

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CornerShop.Core.Data
+﻿namespace CornerShop.Core.Data
 {
     public static class DBConfig
     {
-        public static bool UseCloud { get; set; }=false;
+        public static bool UseCloud { get; set; }=true;
 
-        public const  string LocalConnection= "";
-        private const string CloudConnection = "";
+        public const  string LocalConnection= "mongodb://localhost:27017";
+        private const string CloudConnection = "mongodb+srv:";// TODO: Enter your MongoDB Atlas connection string here
         public static string ConnectionString
         {
             get
@@ -19,6 +13,8 @@ namespace CornerShop.Core.Data
                 return UseCloud ? CloudConnection : LocalConnection;
             }
         }
-        public const string AdminApiUrl = "";
+        // Base URL for API calls. 
+        // NOTE: To view Swagger UI in browser, please append "/swagger/index.html" to this URL.
+        public const string AdminApiUrl = "https://localhost:7099/";
     }
 }

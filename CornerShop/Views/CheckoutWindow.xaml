@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:CornerShop.Views"
         mc:Ignorable="d"
         Title="Checkout" Height="450" Width="700" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
@@ -44,6 +47,28 @@
             <TextBlock Text="{Binding DisplayTotal}" 
                        FontSize="32" FontWeight="Bold" Foreground="#2ecc71" 
                        HorizontalAlignment="Right" Margin="0,0,0,20"/>
+
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20">
+
+                <TextBlock Text="{Binding OriginalPriceDisplay}" 
+               Visibility="{Binding HasDiscount, Converter={StaticResource BoolToVis}}"
+               Foreground="Gray" 
+               TextDecorations="Strikethrough" 
+               HorizontalAlignment="Right"/>
+
+                <TextBlock Text="{Binding DiscountDisplay}" 
+               Visibility="{Binding HasDiscount, Converter={StaticResource BoolToVis}}"
+               Foreground="Red" 
+               HorizontalAlignment="Right"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="Total: " FontSize="24" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding DisplayTotal}" FontSize="24" FontWeight="Bold" Foreground="Green"/>
+                </StackPanel>
+
+            </StackPanel>
+
+
 
             <Button Content="Pay Now" Click="Pay_Click"
                     Height="40" Background="#3498db" Foreground="White" 

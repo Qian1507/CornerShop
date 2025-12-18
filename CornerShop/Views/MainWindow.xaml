@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CornerShop"
         mc:Ignorable="d"
-        Title="Corner Shop" Height="500" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" FontFamily="Segoe UI" Background="#FFF7F7F7">
+        Title="CornerShop Login" Height="500" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" FontFamily="Segoe UI" Background="#FFF7F7F7">
 
     <Window.Resources>
 

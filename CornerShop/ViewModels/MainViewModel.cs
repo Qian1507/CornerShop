@@ -1,14 +1,8 @@
 ﻿using CornerShop.Core.Data;
 using CornerShop.Core.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Diagnostics;
 
 namespace CornerShop.ViewModels
 {
@@ -78,6 +72,7 @@ namespace CornerShop.ViewModels
                     MessageBox.Show($"Welcome, Admin!\n\nOpening Admin API...",
                             "Login Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     OpenAdminApi();
+                    System.Windows.Application.Current.Shutdown();
                 }
                 
                 else

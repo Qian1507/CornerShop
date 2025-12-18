@@ -1,14 +1,8 @@
 ﻿using CornerShop.Core.Data;
 using CornerShop.Core.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading.Tasks;
 
 namespace CornerShop.ViewModels
 {
@@ -90,9 +84,9 @@ namespace CornerShop.ViewModels
         private void UpdateTotalDisplay()
         {
             decimal totalSEK = CartItems.Sum(x => x.UnitPrice * x.Quantity);
-            decimal rate = 1.0m;
-          
-            string symbol = "";
+            decimal rate = 1.0m;          
+            string symbol = "Kr";
+
             switch(SelectedCurrency)
             {
                 case Currency.USD:
@@ -104,7 +98,9 @@ namespace CornerShop.ViewModels
                     symbol = "€";
                     break;
                 default:
-                    rate=1.0m; break;
+                    rate=1.0m;
+                    symbol = "Kr";
+                    break;
             }
             decimal discountRate = 0m;
             switch (user.Level)
@@ -112,18 +108,18 @@ namespace CornerShop.ViewModels
                 case UserLevel.Gold: discountRate=0.15m; break;
                 case UserLevel.Silver:discountRate=0.10m; break;
                 case UserLevel.Bronze:discountRate = 0.05m; break;
-                default :              discountRate = 1.00m; break;
+                default :              discountRate = 0.00m; break;
             }
-            decimal originalPrice=totalSEK;
+            decimal originalPrice=totalSEK*rate;
             decimal discountAmount=originalPrice*discountRate;
             decimal finalPrice=originalPrice- discountAmount;
 
-            DisplayTotal = $"{symbol}{finalPrice:N1}";
+            DisplayTotal = $"{symbol}{finalPrice:N2}";
             if (discountRate > 0)
             {
                 HasDiscount = true;
                 OriginalPriceDisplay = $"{symbol} {originalPrice:N2}";
-                DiscountDisplay = $"{user.Level} Discount: -{symbol} {discountAmount:N2}";
+                DiscountDisplay = $"{user.Level} (-{discountRate:P0}): -{symbol}{discountAmount:N2}";
             }
             else
             {

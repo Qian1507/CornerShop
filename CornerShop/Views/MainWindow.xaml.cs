@@ -1,17 +1,9 @@
 ﻿using CornerShop.Core.Data;
 using CornerShop.Core.Models;
 using CornerShop.ViewModels;
-using System.Text;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Diagnostics;
 
 namespace CornerShop
 {
@@ -46,19 +38,25 @@ namespace CornerShop
         }
         private async void Register_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-               
-                string username = UserBox.Text;
-                string password = PasswordBox.Password;
-                await _viewModel.RegisterAsync(username, password);
+            string username = UserBox.Text;
+            string password = PasswordBox.Password;
 
-                MessageBox.Show("Registration successful! You can now log in.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception ex)
+            var Result = await _viewModel.RegisterAsync(username, password);
+            if(Result != null)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Registration successful! You can now log in.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
             }
+            else
+            {
+                if (!string.IsNullOrEmpty(UserBox.Text))
+                {
+                    MessageBox.Show(_viewModel.Message, "Registratio Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+
+
         }
         private void OpenNextWindow(User user)
         {
