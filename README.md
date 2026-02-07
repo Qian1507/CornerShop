@@ -28,6 +28,16 @@ A RESTful API project built with ASP.NET Core.
 - Provides endpoints for administrative tasks.
 - Reuses the **same** `CornerShop.Core` library, demonstrating code reusability between Desktop and Web environments.
 
+## 📸 Cloud & Interface Preview
+
+**1. Desktop UI (WPF)**
+*The user interface listing products fetched directly from the cloud.*
+![WPF App Screenshot](./app_ui.png)
+
+**2. Cloud Backend (MongoDB Atlas)**
+*Real-time data persistence verification in the MongoDB Atlas Cluster.*
+![MongoDB Atlas Screenshot](./cloud_mgdb.PNG)
+
 ## 🛠 Tech Stack
 
 - **Language:** C# 10 / .NET 8
