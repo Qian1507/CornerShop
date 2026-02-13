@@ -65,7 +65,7 @@ To run this solution locally, you need to configure the database connection stri
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/QQQQQQQQQian/CornerShop.git
+    git clone https://github.com/Qian1507/CornerShop.git
     ```
 
 2.  **Configuration (Critical Step!)**
